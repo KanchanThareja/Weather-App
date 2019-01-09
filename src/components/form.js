@@ -4,8 +4,8 @@ class Form extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.props.handleclick}>
-        <input name="city" placeholder="city ..." />
+      <form onSubmit={this.props.getweather}>
+        <input type="text" name="city" placeholder="city ..." />
         <button>Search</button>
       </form>
     );
