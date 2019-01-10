@@ -6,7 +6,7 @@ class Form extends React.Component {
     return (
       <form onSubmit={this.props.getweather}>
         <input type="text" name="city" placeholder="city ..." />
-        <button>Search</button>
+        <button onClick={this.getweather}>Search</button>
       </form>
     );
   }
