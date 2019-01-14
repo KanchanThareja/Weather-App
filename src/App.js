@@ -2,34 +2,53 @@ import React, { Component } from 'react';
 import './App.css';
 import Form from './components/form';
 import Tiles from './components/tiles';
+import Moment from 'moment';
 
 class App extends Component {
   state = {
     data: [],
-    date: '',
+    date: [],
+    index: [],
     humidity: 0,
     temperature: 0,
     pressure: 0,
     time : ''
   }
+
   getweather = async (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
     if(city){
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=73c146e4ee5ae67f94bff6e87db44483&units=metric`);
     const dataW = await api_call.json();
-    const dateString = dataW.list[0].dt_txt;
-    console.log(dataW);
     this.setState({data : dataW.list});
-    this.setState({humidity : dataW.list[0].main.humidity});
+    console.log(dataW);
+
+    let dateString = dataW.list[0].dt_txt;
+  //  let dateString = dataW.list[i].dt_txt;
+
+    let date = Moment(dateString).format('ddd MMM Do');
+    let dates = [];
+    let prev = date;
+   dates.push(prev);
+
+    for(let i = 0; i < dataW.list.length; i++)
+      {
+      dateString = dataW.list[i].dt_txt;
+       date = Moment(dateString).format('ddd MMM Do');
+      if(date !== prev)
+      {
+        console.log(prev);
+        dates.push(date);
+        prev = date;
+      }
+    }
+
+    this.setState({date: dates});
     this.setState({pressure : dataW.list[0].main.pressure});
     this.setState({temperature : dataW.list[0].main.temp});
-
-    const dt = dateString.split(/\-|\s/);
-    const date = new Date(dt.slice(0,3).reverse().join('-') + ' ' + dt[3]);
-    this.setState({date: date.toString().substring(0,10)});
     this.setState({time: dateString.substring(11,20)});
-    console.log(date.toString().substring(0,10));
+    console.log(date);
     console.log(dateString.substring(11,20));
     } else {
     console.log("error: invalid input");
