@@ -8,7 +8,7 @@ class App extends Component {
   state = {
     data: [],
     date: [],
-    index: [],
+    index: [0],
     humidity: 0,
     temperature: 0,
     pressure: 0,
@@ -29,8 +29,10 @@ class App extends Component {
 
     let date = Moment(dateString).format('ddd MMM Do');
     let dates = [];
+    let indices = [];
     let prev = date;
-   dates.push(prev);
+    dates.push(prev);
+
 
     for(let i = 0; i < dataW.list.length; i++)
       {
@@ -40,11 +42,13 @@ class App extends Component {
       {
         console.log(prev);
         dates.push(date);
+        indices.push(i);
         prev = date;
       }
     }
 
     this.setState({date: dates});
+    this.setState({index: indices});
     this.setState({pressure : dataW.list[0].main.pressure});
     this.setState({temperature : dataW.list[0].main.temp});
     this.setState({time: dateString.substring(11,20)});
@@ -52,7 +56,7 @@ class App extends Component {
     console.log(dateString.substring(11,20));
     } else {
     console.log("error: invalid input");
-  }
+    }
   }
 
   handleclick = (e) => {
@@ -81,6 +85,7 @@ class App extends Component {
           <button onClick={this.handleclick}>Use my location</button>
           <Tiles data={this.state.data}
           date={this.state.date}
+          index={this.state.index}
           time={this.state.time}
           humidity = {this.state.humidity}
           pressure = {this.state.pressure}
