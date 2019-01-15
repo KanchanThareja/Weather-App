@@ -8,10 +8,11 @@ class App extends Component {
   state = {
     data: [],
     date: [],
-    index: [0],
-    humidity: 0,
-    temperature: 0,
-    pressure: 0,
+    index: [],
+    times: [],
+    temp : [],
+    pressure : [],
+    humidity: [],
     time : ''
   }
 
@@ -28,16 +29,21 @@ class App extends Component {
   //  let dateString = dataW.list[i].dt_txt;
 
     let date = Moment(dateString).format('ddd MMM Do');
-    let dates = [];
+    let dates = [], times = [], humidity = [], temp = [], pressure = [];
     let indices = [];
     let prev = date;
     dates.push(prev);
+    indices.push(0);
 
 
     for(let i = 0; i < dataW.list.length; i++)
       {
       dateString = dataW.list[i].dt_txt;
        date = Moment(dateString).format('ddd MMM Do');
+       times.push(dateString.substring(11,20));
+       temp.push(dataW.list[i].main.temp);
+       pressure.push(dataW.list[i].main.pressure);
+       humidity.push(dataW.list[i].main.humidity);
       if(date !== prev)
       {
         console.log(prev);
@@ -48,9 +54,11 @@ class App extends Component {
     }
 
     this.setState({date: dates});
+    this.setState({times: times});
     this.setState({index: indices});
-    this.setState({pressure : dataW.list[0].main.pressure});
-    this.setState({temperature : dataW.list[0].main.temp});
+    this.setState({temp: temp});
+    this.setState({pressure : pressure});
+    this.setState({temp : temp});
     this.setState({time: dateString.substring(11,20)});
     console.log(date);
     console.log(dateString.substring(11,20));
@@ -82,14 +90,14 @@ class App extends Component {
         <header className="App-header">
         <h1>Open Weather Forecast</h1>
           <Form getweather={this.getweather} /><br />
-          <button onClick={this.handleclick}>Use my location</button>
-          <Tiles data={this.state.data}
+          <button onClick={this.handleclick}>Use my location</button><br />
+          <Tiles times={this.state.times}
           date={this.state.date}
           index={this.state.index}
           time={this.state.time}
           humidity = {this.state.humidity}
           pressure = {this.state.pressure}
-          temperature = {this.state.temperature} />
+          temp = {this.state.temp} />
         </header>
       </div>
     );
