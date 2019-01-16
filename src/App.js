@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Form from './components/form';
+import Forms from './components/forms';
 import Tiles from './components/tiles';
 import Moment from 'moment';
+import { Button, Form, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
 
 class App extends Component {
   state = {
@@ -13,7 +14,6 @@ class App extends Component {
     temp : [],
     pressure : [],
     humidity: [],
-    time : ''
   }
 
   getweather = async (e) => {
@@ -22,6 +22,8 @@ class App extends Component {
     if(city){
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=73c146e4ee5ae67f94bff6e87db44483&units=metric`);
     const dataW = await api_call.json();
+    if(dataW)
+    {
     this.setState({data : dataW.list});
     console.log(dataW);
 
@@ -58,13 +60,14 @@ class App extends Component {
     this.setState({index: indices});
     this.setState({temp: temp});
     this.setState({pressure : pressure});
+    this.setState({humidity : humidity});
     this.setState({temp : temp});
-    this.setState({time: dateString.substring(11,20)});
+
     console.log(date);
     console.log(dateString.substring(11,20));
     } else {
     console.log("error: invalid input");
-    }
+    }}
   }
 
   handleclick = (e) => {
@@ -86,19 +89,23 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-        <h1>Open Weather Forecast</h1>
-          <Form getweather={this.getweather} /><br />
-          <button onClick={this.handleclick}>Use my location</button><br />
-          <Tiles times={this.state.times}
-          date={this.state.date}
-          index={this.state.index}
-          time={this.state.time}
-          humidity = {this.state.humidity}
-          pressure = {this.state.pressure}
-          temp = {this.state.temp} />
-        </header>
+      <div>
+        <Container>
+        <Row className="main"><h1>Open Weather Forecast</h1></Row>
+        <Row className="main"><Col>Enter your city</Col></Row>
+        <Row className="borderdown">
+         <Col sm={{ size: 'auto', offset: 0 }}><Forms getweather={this.getweather} /></Col>
+         <Col sm={{ size: 'auto', offset: 0.7 }} className="slash">|</Col>
+         <Col sm={{ size: 'auto', offset: 0.7 }}><Button onClick={this.handleclick}>Use my location</Button></Col>
+       </Row><br />
+        <Row><Tiles times={this.state.times}
+        date={this.state.date}
+        index={this.state.index}
+        time={this.state.time}
+        humidity = {this.state.humidity}
+        pressure = {this.state.pressure}
+        temp = {this.state.temp} /></Row>
+        </Container>
       </div>
     );
   }

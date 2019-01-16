@@ -1,4 +1,4 @@
-.App {
+/*.App {
   text-align: center;
 }
 
@@ -11,4 +11,58 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}*/
+
+.main{
+  margin-top: 40px;
+}
+
+.borderdown {
+  border-bottom: 2px solid #f1f1f1;
+  max-width: inherit;
+  padding-bottom: 30px;
+}
+
+.tile {
+  margin-top: 30px;
+  text-align: center;
+  align-items: center;
+}
+
+.contain {
+  margin-top: 20px;
+  align-items: center;
+  text-align: left;
+}
+.slash {
+  font-size: 28px;
+  color: #797e84;
+}
+
+.tile {
+  border-bottom: #f1f1f1;
+  padding-bottom: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .Card {
+    min-width: 10rem;
+    max-width: 20rem;
+  }
+  .aligning {
+    margin-left: 10px;
+    padding: 0;
+  }
+}
+.aligning {
+  margin-left: 5rem;;
+  padding: 20px;
+}
+.Card {
+  text-align: center;
+  justify-content: center;
+  max-width: 50rem;
+  min-width: 30rem;
+  border: 2px solid #797e84;
+  border-radius: 4px;
 }
