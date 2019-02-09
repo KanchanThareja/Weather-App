@@ -1,3 +1,7 @@
+## Description
+
+Using Open Weather Map API to inform users of every 3 hours and upto 5 days weather forecast that could be searched in any city.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
